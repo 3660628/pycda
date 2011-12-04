@@ -1,0 +1,2 @@
+I wrote this as a part of My Undergraduate Project on Continuous Descent Approach. 
+It contains flight dynamics model and a controller to control different states. There is base class for aircraft, by default it contain parameters of an small business jet. Refer to documentation for more details.

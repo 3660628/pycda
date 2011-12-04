@@ -3,7 +3,7 @@ from controller import Controller
 from misc import sign, atmosphere, transformation, stepprofile, cdaprofile
 from numpy import pi,sqrt,cos,sin, arctan, arcsin, array, exp, zeros, matrix, linspace, arange, savez, zeros_like
 from pylab import plot, legend, figure, subplot, show
-from progressbar import ProgressBar, AnimatedProgressBar
+
 from flightdynamics import FlightDynamics
 from analyzer import _plot
 degtorad = pi/180
