@@ -1,3 +1,4 @@
+#Ref: http://www.princeton.edu/~stengel/FDcodeB.html
 #This file contains aicrafts which can be imported in the flightdynamics model
 #Data Structure
 #Aicraft
@@ -214,7 +215,7 @@ class Aircraft:
             (cldar*aileron+cldasr*spoiler)*self.wingmach
         
     def _thrust(self,throttle, rho, h):
-        self.thrust = throttle*self.Ts*((rho/1.225)**.7)*(1-exp((h-17000)/2000.0));
+        self.thrust = throttle*self.Ts*((rho/1.225)**.7)*(1-exp((h-17000)/2000.0))
     
     def _calc(self, Va, x, u):
         """

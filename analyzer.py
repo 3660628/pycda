@@ -27,7 +27,7 @@ def _plot(file = '/home/anand/btpdata/case_7.npz'):
     
     y = zeros_like(x[3])
     for i in range(len(x[3])):
-        y[i] = cdaprofile(x[3][i])
+        y[i] = stepprofile(x[3][i])
     plot(x[3],y)
     
     show()

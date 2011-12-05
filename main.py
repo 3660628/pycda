@@ -13,7 +13,7 @@ dt = 0.01
 class TController(Controller):
     def control(self,t,x):
         u = zeros([7])
-        self.h_req = cdaprofile(x[3])
+        self.h_req = stepprofile(x[3])
         thr = self.heightcontrol(-x[5])
         u[3] = max(0,min(1,thr))
         print u[3]
@@ -27,7 +27,7 @@ a = SmallBussinessJet()
 c = TController(dt)
 
 
-_file = '/home/anand/btpdata/cda.npz'
+_file = '/home/anand/btpdata/step.npz'
 x = zeros([12])
 
 x[0] = 200
