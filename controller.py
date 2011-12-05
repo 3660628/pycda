@@ -4,7 +4,7 @@
 from misc import sign, atmosphere, transformation
 from numpy import pi,sqrt,cos,sin, arctan, arcsin, array, exp, zeros, matrix, linspace, arange
 from pylab import plot, legend, figure, subplot
-from progressbar import ProgressBar, AnimatedProgressBar
+
 degtorad = pi/180
 radtodeg = 1/degtorad
 
@@ -86,3 +86,48 @@ class Controller:
         u[5] = 0.0
         u[6] = 0.0
         return u
+
+    # def J(self, x):
+    #     #return u*u + h*h + w*w
+    #     return x[0]*x[0] + x[5]*x[5] + x[2]*x[2]
+    
+    # def derJ(self):
+    #     J = self.J
+    #     _J = zeros([4])
+    #     de = 0.001
+    #     dT = 0.001
+    #     dtheta = 0.001
+    #     dh = 1.0
+    #     x = copy(self.x)
+    #     tmpu = copy(self.u)
+    #     self.u[0] += de
+       
+    #     xdot = self._derivative()
+    #     x += xdot*.01
+    #     _J[0] = (J(x) - J(self.x))/de
+
+    #     self.u = copy(tmpu)
+    #     x = copy(self.x)
+    #     self.u[3] += dT
+    #     xdot = self._derivative()
+    #     x += xdot*.01
+        
+    #     _J[1] = (J(x) - J(self.x))/dT
+        
+    #     x = copy(self.x)
+    #     x[10] += dtheta
+    #     xdot = self._derivative()
+    #     x += xdot*.01
+        
+    #     _J[2] = (J(x) - J(self.x))/dtheta
+    #     self.u = tmpu
+    #     x = copy(self.x)
+    #     x[5] -= dh
+    #     xdot = self._derivative()
+    #     x += xdot*.01
+    #     _J[3] = (J(x) - J(self.x))/dh
+    #     self.u = tmpu
+      
+        
+    #     print _J
+    #     return _J
