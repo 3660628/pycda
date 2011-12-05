@@ -29,8 +29,12 @@ def _plot(file = './data/case_7.npz'):
     for i in range(len(x[3])):
         y[i] = cdaprofile(x[3][i])
     plot(x[3],y)
+    
     show()
-
+    figure()
+    plot(u[0])
+    plot(u[3])
+    show()
 def comparison():
     cda = load('./data/cda.npz')
     step = load('./data/step.npz')

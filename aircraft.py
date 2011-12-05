@@ -22,7 +22,7 @@
 from misc import sign, atmosphere, transformation
 from numpy import pi,sqrt,cos,sin, arctan, arcsin, array, exp, zeros, matrix, linspace, arange
 from pylab import plot, legend, figure, subplot
-
+from progressbar import ProgressBar, AnimatedProgressBar
 degtorad = pi/180
 radtodeg = 1/degtorad
 
@@ -268,3 +268,7 @@ class Aircraft:
         self._CY(beta, rudder, aileron, spoiler)
         self._Cn(beta, V, r, p, aileron, rudder, spoiler)
         self._Cl(beta, p, r, spoiler, rudder, aileron, V, Mach)
+
+
+class SmallBussinessJet(Aircraft):
+    pass 

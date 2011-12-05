@@ -14,7 +14,7 @@
 
 from numpy import pi,sqrt,cos,sin, arctan, arcsin, array, exp, zeros, matrix, linspace, arange, tan
 from pylab import plot, legend, figure, subplot
-
+from progressbar import ProgressBar, AnimatedProgressBar
 
 def sign(x):
 

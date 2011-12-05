@@ -2,15 +2,18 @@
 from aircraft import Aircraft
 from controller import Controller
 from misc import sign, atmosphere, transformation
-from numpy import pi,sqrt,cos,sin, arctan, arcsin, array, exp, zeros, matrix, linspace, arange, savez
-from pylab import plot, legend, figure, subplot
-
+from numpy import pi,sqrt,cos,sin, arctan, arcsin, array, exp, zeros, matrix, linspace, arange, savez, tan
+from pylab import plot, legend, figure, subplot, copy
+from progressbar import ProgressBar, AnimatedProgressBar
 degtorad = pi/180
 radtodeg = 1/degtorad
 
 
 
 class FlightDynamics:
+    """This class is a flight dynamics solver which takes input as aircraft and solver for given initial condition, and control action.
+       Control action is taken from the object controller!
+    """
     def __init__(self,aircraft = Aircraft(), controller = Controller(0.01), x = zeros([12]), u = zeros([7]), _file = 'data.npz', tf = 1500.0, dt = 0.01):
         self.a = aircraft
         self.c = controller
@@ -84,8 +87,53 @@ class FlightDynamics:
 	xd10	=	cos(x[9]) * x[7] - sin(x[9]) * x[8];
 	xd11	=	(sin(x[9]) * x[7] + cos(x[9]) * x[8]) / cosPitch;
 	
-	self.xdot	=	array([xd0,xd1,xd2,xd3,xd4,xd5,xd6,xd7,xd8,xd9,xd10,xd11]);
+	return array([xd0,xd1,xd2,xd3,xd4,xd5,xd6,xd7,xd8,xd9,xd10,xd11]);
         
+    def J(self, x):
+        #return u*u + h*h + w*w
+        return x[0]*x[0] + x[5]*x[5] + x[2]*x[2]
+    
+    def derJ(self):
+        J = self.J
+        _J = zeros([4])
+        de = 0.001
+        dT = 0.001
+        dtheta = 0.001
+        dh = 1.0
+        x = copy(self.x)
+        tmpu = copy(self.u)
+        self.u[0] += de
+       
+        xdot = self._derivative()
+        x += xdot*.01
+        _J[0] = (J(x) - J(self.x))/de
+
+        self.u = copy(tmpu)
+        x = copy(self.x)
+        self.u[3] += dT
+        xdot = self._derivative()
+        x += xdot*.01
+        
+        _J[1] = (J(x) - J(self.x))/dT
+        
+        x = copy(self.x)
+        x[10] += dtheta
+        xdot = self._derivative()
+        x += xdot*.01
+        
+        _J[2] = (J(x) - J(self.x))/dtheta
+        self.u = tmpu
+        x = copy(self.x)
+        x[5] -= dh
+        xdot = self._derivative()
+        x += xdot*.01
+        _J[3] = (J(x) - J(self.x))/dh
+        self.u = tmpu
+      
+        
+        print _J
+        return _J
+    
     def _calc(self):
         t = arange(0,self.tf,self.dt)
         
@@ -93,13 +141,26 @@ class FlightDynamics:
         self.xdata = zeros([12,len(t)])
         self.udata = zeros([7,len(t)])
         self.xddata = zeros([12,len(t)])
-        #progress bar
+
 
                 
         for i in range(len(t)):
+   
+            # eps = 1e-7
+            # #Calculate Trim parameters here
+            # trim_der = self.derJ()
+            # self.u[0] -= eps*trim_der[0]
+            # self.u[3] -= eps*trim_der[1]
+            # self.x[10] -= eps*trim_der[2]
+            # self.x[0] = 120*sin(self.x[10])
+            # self.x[2] = 120*cos(self.x[10])
+            # self.x[5] = -2000
             #Apply controller action here
             self.u = self.c.control(t[i], self.x) 
-            self._derivative()
+            
+            
+            
+            self.xdot =  self._derivative()
             self.x += self.xdot*self.dt
 
             #Store data 
@@ -107,8 +168,10 @@ class FlightDynamics:
             self.xddata[:,i] = self.xdot
             self.udata[:,i] = self.u
             
+            #End Condition
             if -self.x[5] < 0:
-                break
+                pass
+                #break
         
 
         savez(self._file, t = t, x = self.xdata, xd = self.xddata, u = self.udata)
