@@ -27,7 +27,7 @@ a = SmallBussinessJet()
 c = TController(dt)
 
 
-_file = '~/btpdata/cda.npz'
+_file = '/home/anand/btpdata/cda.npz'
 x = zeros([12])
 
 x[0] = 200

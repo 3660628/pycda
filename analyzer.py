@@ -2,7 +2,7 @@ import cPickle as pickle
 from pylab import plot, subplot, figure, legend, grid, show
 from numpy import load, arctan, zeros_like
 from misc import stepprofile, cdaprofile
-def _plot(file = '~/btpdata/case_7.npz'):
+def _plot(file = '/home/anand/btpdata/case_7.npz'):
     _file = load(file)
     t = _file['t']
     x = _file['x']
@@ -36,8 +36,8 @@ def _plot(file = '~/btpdata/case_7.npz'):
     plot(u[3])
     show()
 def comparison():
-    cda = load('~/btpdata/cda.npz')
-    step = load('~/btpdata/step.npz')
+    cda = load('/home/anand/btpdata/cda.npz')
+    step = load('/home/anand/btpdata/step.npz')
     uc = cda['u']
     us = step['u']
     subplot(211)
