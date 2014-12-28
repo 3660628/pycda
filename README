@@ -1,2 +1,3 @@
 I wrote this as a part of My Undergraduate Project on Continuous Descent Approach. 
+The author forget to put some data in here, such as /home/anand/btpdata/case_7.npz and /home/anand/btpdata/cda.npz.
 It contains flight dynamics model and a controller to control different states. There is base class for aircraft, by default it contain parameters of an small business jet. Refer to documentation for more details.
